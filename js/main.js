@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initParallaxEffect();
     initCardHoverEffect();
+    initMarqueeSlider();
 });
 
 /**
@@ -350,4 +351,79 @@ function throttle(func, limit) {
             setTimeout(() => inThrottle = false, limit);
         }
     };
+}
+
+/**
+ * Infinite Marquee Slider
+ * Continuous horizontal scroll with pause on hover
+ */
+function initMarqueeSlider() {
+    console.log('Initializing marquee slider...');
+
+    const slider = document.querySelector('.marquee-slider');
+    if (!slider) {
+        console.log('Marquee slider not found, skipping initialization');
+        return;
+    }
+
+    const track = slider.querySelector('.marquee-track');
+    const cards = slider.querySelectorAll('.testimonial-card');
+    const toggleBtn = slider.querySelector('.marquee-toggle');
+    const toggleIcon = toggleBtn?.querySelector('.marquee-toggle-icon');
+
+    if (!track || cards.length === 0) {
+        console.log('Marquee track or cards not found');
+        return;
+    }
+
+    // Clone all cards for infinite scroll effect
+    cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+    });
+
+    let isPaused = false;
+
+    // Toggle button functionality
+    if (toggleBtn && toggleIcon) {
+        toggleBtn.addEventListener('click', () => {
+            isPaused = !isPaused;
+            slider.classList.toggle('paused', isPaused);
+            toggleIcon.textContent = isPaused ? '▶' : '⏸';
+        });
+    }
+
+    // Touch support - pause on touch
+    let touchStartX = 0;
+    let isTouching = false;
+
+    slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        isTouching = true;
+        slider.classList.add('paused');
+    }, { passive: true });
+
+    slider.addEventListener('touchend', () => {
+        isTouching = false;
+        if (!isPaused) {
+            slider.classList.remove('paused');
+        }
+    });
+
+    // Accessibility - pause on focus within
+    const focusableElements = track.querySelectorAll('a, button');
+    focusableElements.forEach(el => {
+        el.addEventListener('focus', () => {
+            slider.classList.add('paused');
+        });
+
+        el.addEventListener('blur', () => {
+            if (!isPaused) {
+                slider.classList.remove('paused');
+            }
+        });
+    });
+
+    console.log('Marquee slider initialized with', cards.length, 'cards (doubled for infinite scroll)');
 }

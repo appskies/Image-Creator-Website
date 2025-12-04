@@ -643,6 +643,141 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ===================================
+   Infinite Marquee Slider
+   =================================== */
+.marquee-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0 60px;
+}
+
+.marquee-track {
+    display: flex;
+    gap: 25px;
+    animation: marquee-scroll 35s linear infinite;
+    width: max-content;
+}
+
+.marquee-slider:hover .marquee-track,
+.marquee-slider.paused .marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Gradient Fade Edges */
+.marquee-gradient {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 150px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.marquee-gradient-left {
+    left: 0;
+    background: linear-gradient(to right, var(--primary-dark) 0%, transparent 100%);
+}
+
+.marquee-gradient-right {
+    right: 0;
+    background: linear-gradient(to left, var(--primary-dark) 0%, transparent 100%);
+}
+
+/* Marquee Testimonial Cards */
+.marquee-slider .testimonial-card {
+    flex: 0 0 350px;
+    min-width: 350px;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 107, 53, 0.1);
+    border-radius: 20px;
+    padding: 35px;
+    transition: all 0.4s ease;
+}
+
+.marquee-slider .testimonial-card:hover {
+    transform: scale(1.05);
+    border-color: var(--accent);
+    background: var(--card-bg-hover);
+    box-shadow: 0 0 30px rgba(255, 107, 53, 0.2);
+}
+
+/* Pause/Play Toggle Button */
+.marquee-toggle {
+    position: absolute;
+    bottom: 10px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 20;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+}
+
+.marquee-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(255, 107, 53, 0.5);
+}
+
+.marquee-toggle-icon {
+    font-size: 1.2rem;
+    color: white;
+    line-height: 1;
+}
+
+/* Responsive Marquee */
+@media (max-width: 768px) {
+    .marquee-slider .testimonial-card {
+        flex: 0 0 300px;
+        min-width: 300px;
+        padding: 25px;
+    }
+
+    .marquee-gradient {
+        width: 80px;
+    }
+
+    .marquee-toggle {
+        right: 20px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .marquee-toggle-icon {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .marquee-slider .testimonial-card {
+        flex: 0 0 280px;
+        min-width: 280px;
+        padding: 20px;
+    }
+
+    .marquee-gradient {
+        width: 50px;
+    }
+}
+
+/* ===================================
    App Rating Section
    =================================== */
 .app-rating {
