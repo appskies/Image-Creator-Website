@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["5DKBCS58WX.com.asimcanyagiz.Wallpaper-Engine"],
+        "components": [
+          {
+            "/": "/app/*",
+            "comment": "Universal Links into the LUX iOS app (com.asimcanyagiz.Wallpaper-Engine). SceneDelegate.handleDeepLink routes paths containing 'paywall'/'offer' to the paywall and everything else to Home. Only the /app/* namespace is claimed so the marketing pages (/, /privacy.html, /terms.html, /contact.html) keep opening in the browser."
+          }
+        ]
+      }
+    ]
+  }
+}
